@@ -1,0 +1,218 @@
+﻿@model ToyotaGarancneOpravy.Models.GarancnaOprava
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GarancnaOprava</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ZakazkaTb)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ZakazkaTb)
+        </dd>
+@*        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TbScan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TbScan)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TbFileName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TbFileName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ZakazkaTg)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ZakazkaTg)
+        </dd>
+@*        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TgScan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TgScan)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TgFileName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TgFileName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cws)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cws)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Protokol)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Protokol)
+        </dd>
+@*        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>*@
+    </dl>
+
+    <div>
+    <h5>Povinne polozky</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Priloha nazov
+            </th>
+
+            <th>
+                Priloha subor
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+      @*  @foreach(var obj in Model.Prilohy)*@
+        @for(int i = 0; i < Model.Prilohy.Count; i++)
+        {
+            <tr>
+                <td> 
+                  @Html.EditorFor(x => x.Prilohy[i].PrilohaNazov, new { htmlAttributes = new { @class = "form-control"} })
+                  @* <input asp-for="@obj.PrilohaNazov" class="form-control" />*@
+                </td>
+                <td>
+                    @Html.EditorFor(x => x.Prilohy[i].PrilohaFile, new { htmlAttributes = new { @class = "form-control"} })
+                 @*  <input asp-for="@obj.PrilohaFile" class="form-control" />*@
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+</div>
+
+<form asp-action="UpdatePrilohy" method="post">
+    <div class="form-group">
+        <label > Dalsie Prilohy</label>
+  
+    </div>
+
+    <div class="form-group">
+        <div id="inputFormRow" style="width: 35%">
+            <div class="input-group mb-3">
+                <br />
+                <div class="input-group-append"></div>
+            </div>
+        </div>
+        <div id="newRow">
+            <input type="hidden" id="totalLans" value="0" />
+        </div>
+        <button id="addRow" type="button" class="btn btn-info">Dalsia priloha</button>    
+    </div>
+       
+        <button type="submit" id="createButton" class="btn btn-primary">Uloz Zmeny</button>
+   
+</form>
+
+
+
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.GarancnaOpravaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+
+
+
+<script>
+        
+       $("#addRow").click(function ()
+    {
+       
+        var rowCount = parseInt($("#totalLans").val());
+        rowCount++;
+        $("#totalLans").val(rowCount);
+        var html = '';
+        html += '<div id="inputFormRow" style="width: 35%">';
+        html += '<div class="input-group mb-3">'; 
+
+                //change id attribute to name attribute and modify the name
+        html += '<input type="text" name="answer[' + (rowCount - 1) + '].AnswerText" class="form-control m-input"  autocomplete="off" style="width: 30%" required>';
+        html += '<input type="text" name="answer[' + (rowCount - 1) + '].Class" class="form-control m-input"  autocomplete="off" style="width: 30%" required>';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove Network</button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+        
+    });    
+
+    $(document).on('click', '#removeRow', function ()
+    {
+        var rowCount = parseInt($("#totalLans").val());
+        rowCount--;
+        $("#totalLans").val(rowCount);
+        $(this).closest('#inputFormRow').remove();
+    });    
+
+    $(document).ready(function () {
+        $("#createButton").click(function ()
+        {
+            var inputData = $('form').serializeArray();  
+            $.ajax(
+            {
+                type: "POST", //HTTP POST Method
+                url: "GarancneOpravy/UpdatePrilohy", // Controller/View
+                data: inputData,
+                success : function(response) {
+                    console.log(response)
+                }
+            });
+
+        });
+    });
+    </script>
+}

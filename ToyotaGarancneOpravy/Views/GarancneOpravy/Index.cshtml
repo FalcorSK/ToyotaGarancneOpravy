@@ -1,0 +1,119 @@
+﻿@model IEnumerable<ToyotaGarancneOpravy.Models.GarancnaOprava>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="SearchString">Search:</label>
+        <input type="text" name="SearchString"  
+        value="@ViewData["CurrentFilter"]"/>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ZakazkaTb)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.TbScan)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.TbFileName) 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZakazkaTg)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.TgScan)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.TgFileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cws)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Protokol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.GarancnaOpravaId">@Html.DisplayFor(modelItem => item.ZakazkaTb)</a> 
+            </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.TbScan)
+            </td>*@
+            <td>
+                <a asp-action="FileOpenTB" asp-route-id="@item.GarancnaOpravaId"> @Html.DisplayFor(modelItem => item.TbFileName)</a>
+                
+            </td>
+            <td>
+             
+                @Html.DisplayFor(modelItem => item.ZakazkaTg)
+            </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.TgScan)
+            </td>*@
+            <td>
+                <a asp-action="FileOpenTG" asp-route-id="@item.GarancnaOpravaId"> @Html.DisplayFor(modelItem => item.TgFileName)</a>
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cws)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Protokol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GarancnaOpravaId">Edit</a> |
+              @*  <a asp-action="Details" asp-route-id="@item.GarancnaOpravaId">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.GarancnaOpravaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
